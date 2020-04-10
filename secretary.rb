@@ -69,7 +69,12 @@ class PostdocSim < Simulator
   private
 
   def selection
-    @selection ||= candidates.drop(magic_number).find { |k| k < subfloor && k > floor } || candidates.last
+    @selection ||= candidates.drop(magic_number).reduce([subfloor, floor]) do |(sf, f), k|
+      break(k) if k < sf && k > f
+      break(k) if k == candidates.last
+      next([f, k]) if k < f
+      [sf, f]
+    end
   end
 
   def subfloor
@@ -116,7 +121,6 @@ class Trial
 
   def results
     @results ||= trial_count.times.map { |x| sim.result(candidate_count) }
-    @results
   end
 
   def average_rank
@@ -136,6 +140,6 @@ Trial.new(ValueSim, 500, 100).report
 Trial.new(ValueSim, 500, 1000).report
 Trial.new(ValueSim, 500, 1_000_000).report
 
-Trial.new(PostdocSim, 500, 100).report
-Trial.new(PostdocSim, 500, 1000).report
-Trial.new(PostdocSim, 500, 1_000_000).report
+Trial.new(PostdocSim, 1000, 100).report
+Trial.new(PostdocSim, 1000, 1000).report
+Trial.new(PostdocSim, 1000, 10000).report
