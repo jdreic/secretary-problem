@@ -140,6 +140,6 @@ Trial.new(ValueSim, 500, 100).report
 Trial.new(ValueSim, 500, 1000).report
 Trial.new(ValueSim, 500, 1_000_000).report
 
-Trial.new(PostdocSim, 1000, 100).report
-Trial.new(PostdocSim, 1000, 1000).report
-Trial.new(PostdocSim, 1000, 10000).report
+Trial.new(PostdocSim, 500, 100).report
+Trial.new(PostdocSim, 500, 1000).report
+Trial.new(PostdocSim, 500, 1_000_000).report
